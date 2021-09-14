@@ -1,0 +1,3 @@
+/*
+Tracking what cards have been played recently. Important for gameplay purposes
+*/
