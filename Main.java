@@ -6,7 +6,8 @@ class Main {
       
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-    frame.setSize(300,300);
+    frame.setSize(400,300);
+    //frame.setCursor(Cursor.CROSSHAIR_CURSOR);
 
     frame.setVisible(true);  
   }
