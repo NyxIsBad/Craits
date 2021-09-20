@@ -1,3 +1,5 @@
+//render stuff here later
+
 import javax.swing.*;
 
 class Main {

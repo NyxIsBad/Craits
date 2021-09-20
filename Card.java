@@ -1,10 +1,7 @@
 /*
  * Contains information about each card object
 */
-import javax.swing.*;
 import java.math.*;
-import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 class Card {
