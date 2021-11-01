@@ -1,56 +1,122 @@
-/*
- * Contains information about each card object
-*/
-import java.math.*;
-import java.util.ArrayList;
+import java.util.Random;
 
-class Card {
-  private String suit; /*For all intents and purposes this consists of the red suits diamonds and hearts and the black suits clubs and spades*/
-  private String value;
-  private int playDirection; //1 or -1 - 0 would be nice to have but inconvenient
-  private int drawCount; //Number of cards you're doomed to draw
-  private int skipCount; //Number of people that will get skipped muahaha
+public class Card
+{
+  public String suit;
+  public int value;
+  private Random rand;
+  private String face;
 
-  //The constructor
-  public Card(String suit, String value, int playDirection, int drawCount, int skipCount){
-    this.suit = suit;
-    this.value = value;
-    this.playDirection = playDirection;
-    this.drawCount = drawCount;
-    this.skipCount = skipCount;
+  public Card(int v, String s)
+  {
+    value = v;
+    suit = s; 
   }
 
-  //The Getters
-  public String getSuit(){
-    return suit;
-  }
-  public String getValue(){
-    return value;
-  }
-  public int getDirection(){
-    return playDirection;
-  }
-  public int getDraw(){
-    return drawCount;
-  }
-  public int getSkips(){
-    return skipCount;
+  // Creates a random card
+  public Card()
+  {
+    rand = new Random();
+    value = rand.nextInt(13) + 1; 
+    // Giving them all suits
+    rand = new Random();
+    switch(rand.nextInt(4)) {
+      case 0: 
+        suit = "Spades"; 
+        break;
+      case 1: 
+        suit = "Diamonds"; 
+        break;
+      case 2: 
+        suit = "Clubs"; 
+        break;
+      case 3: 
+        suit = "Hearts"; 
+        break;
+    }
+    // We have some special cards.
+    if (value == 8){
+      suit = "wild";
+    } else if (value == 9) {
+      suit = "semiwild"; // Same color wild card
+    }
   }
 
-  //The Setters
-  public void setSuit(String suit){
-    this.suit = suit;
+  public String getFace()
+  {
+    //Gives the card information
+    face = "";
+    if (suit != "wild" && suit != "semiwild")
+    {
+      face += this.suit + " ";
+    }
+
+    switch(this.value)
+    {
+      case 1: 
+        face += "1 | Count incrementer"; 
+        break;
+      case 2: 
+        face += "2 | Starts Count"; 
+        break;
+      case 4: 
+        face += "4 | Skip"; 
+        break;
+      case 5: 
+        face += "5 | Everyone else draws 1"; 
+        break;
+      case 6: 
+        face += "6 | Play twice"; 
+        break;
+      case 7: 
+        face += "7 | Next player draws card"; // I'm aware that in the game there is a special provisio that if played with >2 players, this actually makes the player +1 over draw, but I'm going to skip this for the sake of simplicity. Read: Jeffery is lazy 
+        break;
+      case 8: 
+        face += "8 | Wild Card";
+        break;
+      case 9:
+        face += "9 | Semiwild Card";
+        break;
+      case 10:
+        face += "10 | Reverse";
+        break;
+      default: face += String.valueOf(this.value); 
+        break;
+    }
+    //face += "]";
+    return face;
   }
-  public void setValue(String value){
-    this.value = value;
-  }
-  public void setDirection(int playDirection){
-    this.playDirection = playDirection;
-  }
-  public void setDraw(int drawCount){
-    this.drawCount = drawCount;
-  }
-  public void setSkips(int skipCount){
-    this.skipCount = skipCount;
+
+  // Checking if the card is usable
+  // The suit needs to be specified because if a wild card was chosen in the previous round, the suit would have changed, but the card staying the same
+  public boolean canPlace(Card o, String s)
+  {
+    if (o.value == 1 || o.value == 2){
+      if(this.value == 1 || this.value == 2) { //This checks if a count is over. Note that if a count is over, a new card gets drawn from the deck in order to avoid forcing a player into a suit play.
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (s == this.suit) { //Same suit
+      if (this.value == 1) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    } else if (o.value == this.value) { //Same value
+      if (this.value == 1) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    } else if (this.suit == "wild") { // Wild cards
+      return true;
+    } else if (this.suit == "semiwild") {
+      return true;
+    }
+    return false; //default case
   }
 }

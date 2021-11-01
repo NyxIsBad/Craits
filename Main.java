@@ -1,16 +1,17 @@
-//render stuff here later
-
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Random;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-class Main {
-  public static void main(String[] args) {
-  JFrame frame = new JFrame();
-      
-    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-    frame.setSize(400,300);
-    //frame.setCursor(Cursor.CROSSHAIR_CURSOR);
-
-    frame.setVisible(true);  
+public class Main extends JFrame
+{
+  public static void main(String[] args)
+  {
+    //new Craits();
+    
+    Game g = new Game();
+    g.startGame();
   }
 }
